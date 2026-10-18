@@ -1,216 +1,202 @@
 # Customer Churn & Retention Analysis
 
-An end-to-end data analytics project using **Python, Pandas, MySQL, and
-Power BI** to investigate customer churn patterns, validate data
-quality, and communicate segment-level findings through a dashboard.
+An end-to-end data analytics project exploring customer churn patterns using Python, SQL, and Power BI. The goal is to understand customer retention, identify segments with higher churn rates, and translate the findings into actionable business recommendations.
 
-![Customer Churn & Retention Dashboard](images/dashboard.png)
+## Dashboard Preview
 
-## Executive Summary
+![Customer Churn Analysis Dashboard](images/dashboard.png)
 
-The analysis covers **10,000 unique customers**, **120,000 monthly usage
-records**, and **10,000 churn labels**. Overall, **786 customers
-churned**, giving a churn rate of **7.86%**.
+## Project Overview
 
-The goal is to identify segments that warrant further
-investigation---not to claim that the observed characteristics cause
-churn.
+Customer churn is an important business metric because losing customers can affect revenue, retention, and long-term growth. In this project, I analyzed customer information, usage records, and churn labels to understand how churn varies across different customer segments.
 
-  KPI                          Result
-  ----------------------- -----------
-  Total customers              10,000
-  Churned customers               786
-  Retained customers            9,214
-  Overall churn rate        **7.86%**
-  Monthly usage records       120,000
+The project covers data cleaning, exploratory data analysis (EDA), SQL-based analysis, and interactive dashboard development in Power BI.
 
-## Business Questions
+### Project Highlights
 
--   What is the overall customer churn rate?
--   How does churn vary by contract type, region, age group, gender, and
-    signup year?
--   Do usage and complaint summaries differ between churned and retained
-    customers?
--   Which data quality issues should be considered before interpreting
-    the results?
+- Analyzed **10,000 unique customers** and **120,000 usage records**.
+- Identified **786 churned customers**, representing an overall churn rate of **7.86%**.
+- Compared churn across contract types, regions, age groups, gender, and signup years.
+- Used Python and SQL to analyze the data and cross-check key results.
+- Built a Power BI dashboard to present customer retention KPIs and segment-level churn patterns.
 
-## Technology Stack
+## Tools & Technologies
 
-  -----------------------------------------------------------------------
-  Tool                                How it is used
-  ----------------------------------- -----------------------------------
-  Python                              Cleaning, validation, exploratory
-                                      data analysis
+- **Python:** Data cleaning, analysis, and visualization
+- **Pandas and NumPy:** Data manipulation and numerical analysis
+- **Matplotlib and Seaborn:** Data visualization
+- **SQL (MySQL):** Data querying, joins, aggregations, and segmentation
+- **Power BI:** KPI cards, charts, and interactive dashboard
+- **Jupyter Notebook:** Analysis workflow and documentation
 
-  Pandas                              Duplicate detection, missing-value
-                                      checks, grouping, aggregation
+## Dataset
 
-  MySQL                               Relational tables, joins, grouped
-                                      analysis, quality checks
+The project uses three datasets:
 
-  Power BI                            KPI cards and segment-level visuals
+| Dataset | Description |
+|---|---|
+| Customer information | Customer demographics, contract type, monthly charges, and signup date |
+| Usage data | Monthly call minutes, data usage, SMS counts, and complaints |
+| Churn labels | Indicates whether each customer stayed or churned |
 
-  Jupyter Notebook                    Reproducible analysis narrative
+The customer dataset initially contained 10,200 rows, including duplicate records and conflicting signup dates. The cleaned customer dataset contains 10,000 unique customer records.
 
-  Git / GitHub                        Version control and project
-                                      presentation
-  -----------------------------------------------------------------------
+## Analysis Workflow
 
-## Analytical Workflow
+### 1. Data Cleaning and Quality Checks
 
-1.  **Profile the source files** --- inspect table dimensions, data
-    types, missing values, duplicates, and customer identifiers.
-2.  **Clean customer records** --- remove exact duplicate records and
-    treat uncertain signup dates conservatively.
-3.  **Explore the data** --- compare churn rates across customer
-    segments and summarize usage and complaints.
-4.  **Validate with SQL** --- check counts, aggregate usage, inspect
-    suspicious charges, and reproduce key metrics.
-5.  **Visualize in Power BI** --- present the overall KPIs and churn
-    rates by contract type, region, age group, gender, and signup year.
-6.  **Translate findings carefully** --- distinguish descriptive
-    differences from proven causes and identify useful follow-up
-    analyses.
+- Inspected dataset dimensions, column types, missing values, and duplicate records.
+- Removed exact duplicate customer records.
+- Identified five customer IDs with conflicting signup dates and treated those dates as missing rather than arbitrarily choosing one.
+- Examined missing age values and retained them as missing instead of inventing customer ages.
+- Investigated suspicious monthly charge values, including negative values and unusually high charges.
+- Exported cleaned datasets for further analysis.
 
-## Data Quality Decisions
+### 2. Exploratory Data Analysis (EDA)
 
-Cleaning choices are documented because they affect how the results
-should be interpreted.
+Analyzed customer churn by:
 
--   **Exact duplicates:** removed from the customer information data.
--   **Conflicting signup dates:** five customer IDs had conflicting
-    records; uncertain signup dates were marked missing rather than
-    guessed.
--   **Missing ages:** 3,500 ages were missing and were not arbitrarily
-    imputed.
--   **Suspicious monthly charges:** five negative values and 38 values
-    above 200 were flagged for validation rather than automatically
-    deleted.
--   **Customer IDs:** the cleaned customer table contains 10,000 unique
-    customer IDs.
--   **Cross-tool validation:** important counts and summaries were
-    checked in Python and MySQL.
+- Contract type
+- Geographic region
+- Age group
+- Gender
+- Signup year
+
+Also compared usage metrics and complaint counts between customers who stayed and those who churned.
+
+### 3. SQL Analysis
+
+Used MySQL to analyze churn distribution, customer segments, usage patterns, complaint metrics, and data quality.
+
+SQL techniques included joins, aggregate functions, `GROUP BY`, conditional calculations, and customer-level summaries. Key results were cross-checked against the Python analysis.
+
+### 4. Power BI Dashboard
+
+Developed a dashboard containing:
+
+- Total customers
+- Churned customers
+- Retained customers
+- Overall churn rate
+- Churn rate by contract type
+- Churn rate by region
+- Churn rate by age group
+- Churn rate by gender
+- Churn rate by signup year
+
+The dashboard provides a consolidated view of customer retention and helps compare churn patterns across customer segments.
 
 ## Key Findings
 
-  Segment             Churn rate Interpretation
-  ----------------- ------------ ---------------------------------------------
-  Overall                  7.86% Baseline
-  Yearly contract          8.82% Highest among contract types
-  Age 46--55               8.81% Highest among age groups with recorded ages
-  Urban                    8.12% Rural rate was 7.40%
-  Male                     8.02% Female rate was 7.71%
+### Overall Churn
 
-Additional observations:
+| Metric | Result |
+|---|---:|
+| Total customers | 10,000 |
+| Retained customers | 9,214 |
+| Churned customers | 786 |
+| Overall churn rate | 7.86% |
 
--   Churned customers averaged **6.17 complaints**, compared with
-    **6.02** for retained customers. This is a small difference and does
-    not establish that complaints drive churn.
--   Average call minutes, data usage, and SMS totals were similar
-    between churned and retained customers in this dataset.
--   Signup-year churn rates ranged from approximately **7.34% to
-    8.22%**, without a clear, consistent trend.
--   Segment differences are modest; they should be treated as leads for
-    investigation, not causal conclusions.
+### Churn by Contract Type
 
-## SQL Example: Churn Rate by Contract Type
+| Contract Type | Customers | Churned | Churn Rate |
+|---|---:|---:|---:|
+| Monthly | 3,953 | 299 | 7.56% |
+| Prepaid | 4,041 | 310 | 7.67% |
+| Yearly | 2,006 | 177 | 8.82% |
 
-This example joins the customer table with the separate churn-label
-table, then calculates customer counts and the churn percentage within
-each contract group.
+Yearly contract customers had the highest observed churn rate at 8.82%. This is a segment worth investigating further rather than assuming that contract duration explains churn.
 
-``` sql
-SELECT
-    c.ContractType,
-    COUNT(*) AS total_customers,
-    SUM(ch.Churn) AS churned_customers,
-    ROUND(
-        100.0 * SUM(ch.Churn) / COUNT(*),
-        2
-    ) AS churn_rate_pct
-FROM customers AS c
-JOIN churn_labels AS ch
-    ON c.CustomerID = ch.CustomerID
-GROUP BY c.ContractType
-ORDER BY churn_rate_pct DESC;
-```
+### Churn by Region
 
-**Logic** - `JOIN` matches each customer to their churn label using
-`CustomerID`. - `COUNT(*)` counts customers in each contract group. -
-`SUM(ch.Churn)` counts churned customers because `1` means churned and
-`0` means retained. - The percentage is calculated within each contract
-group; `ORDER BY` shows the highest rate first.
+| Region | Customers | Churned | Churn Rate |
+|---|---:|---:|---:|
+| Urban | 3,287 | 267 | 8.12% |
+| Suburban | 3,402 | 274 | 8.05% |
+| Rural | 3,311 | 245 | 7.40% |
 
-The query assumes one row per customer in both tables, consistent with
-the validated customer and churn-label datasets. See
-[`SQL/02_data_analysis.sql`](SQL/02_data_analysis.sql) for the complete
-query set.
+Urban and suburban customers had slightly higher churn rates than rural customers. The differences are relatively small and would need further investigation before drawing conclusions about their causes.
 
-## Power BI Dashboard
+### Churn by Age Group
 
-The dashboard includes:
+| Age Group | Customers | Churned | Churn Rate |
+|---|---:|---:|---:|
+| 18–25 | 991 | 74 | 7.47% |
+| 26–35 | 1,267 | 92 | 7.26% |
+| 36–45 | 1,293 | 99 | 7.66% |
+| 46–55 | 1,226 | 108 | 8.81% |
+| 56+ | 1,723 | 133 | 7.72% |
 
--   KPI cards for total customers, churned customers, retained
-    customers, and churn rate.
--   Churn rate by contract type.
--   Churn rate by region.
--   Churn rate by age group.
--   Churn rate by gender.
--   Churn rate by signup year.
+Customers aged 46–55 had the highest churn rate among the age groups with recorded ages. However, 3,500 customers had missing age values, so this analysis does not represent the full customer population by age.
 
-Age-group comparisons exclude customers whose age is missing.
-Signup-year comparisons exclude the five uncertain signup dates.
+### Other Observations
 
-The editable Power BI report is available in
-[`churn_analysis_dashboard.pbix`](churn_analysis_dashboard.pbix).
+- **Gender:** The observed churn rate was 8.02% for male customers and 7.71% for female customers.
+- **Signup year:** Churn rates ranged from 7.34% to 8.22% across the signup years analyzed, without a clear year-over-year pattern.
+- **Usage patterns:** Average call minutes, data usage, and SMS counts were broadly similar between retained and churned customers.
+- **Complaints:** Churned customers averaged 6.17 total complaints, compared with 6.02 among retained customers. This difference is small and does not establish a causal relationship.
 
-## Business Recommendations to Investigate
+## Business Recommendations
 
-These are hypotheses for follow-up work, not proven explanations:
+Based on the observed patterns, the following areas could be investigated further:
 
-1.  **Review the yearly-contract journey.** Investigate renewal timing,
-    service experience, and customer expectations before designing
-    retention interventions.
-2.  **Explore the 46--55 age group.** Compare customer needs and service
-    interactions before proposing segment-specific changes.
-3.  **Investigate regional differences.** Check whether service quality,
-    coverage, pricing, or customer mix may help explain the urban--rural
-    gap.
-4.  **Analyze behavior over time.** Examine changes in usage and
-    complaint history rather than relying only on average totals.
-5.  **Evaluate retention experiments.** Test proposed interventions
-    using an appropriate comparison design before concluding they
-    improve retention.
+1. **Investigate yearly-contract churn:** Review renewal experiences, service expectations, and customer feedback for this segment.
+2. **Understand the 46–55 age group:** Explore whether service needs, pricing, or customer experience differ for this group.
+3. **Review urban and suburban retention:** Examine complaints, service quality, and other factors that might explain the modest regional differences.
+4. **Investigate complaint handling:** Compare complaint types, resolution times, and outcomes for customers who stay versus those who leave.
+5. **Improve data quality:** Investigate missing demographic information and unusual monthly charge values before using these fields for further business decisions.
 
-## Limitations
+These are recommendations for further investigation, not proven causes of churn.
 
--   Missing ages may affect the representativeness of age-group
-    comparisons.
--   Five uncertain signup dates are excluded from signup-year
-    comparisons.
--   Suspicious monthly charges require validation against a trusted
-    source.
--   Small differences may not be statistically or commercially
-    meaningful; no significance testing is claimed here.
--   This is descriptive analysis, not a validated churn-prediction
-    model.
--   The conclusions depend on the quality, definitions, and
-    representativeness of the supplied datasets.
+## Data Quality and Limitations
 
-## Repository Structure
+- The customer dataset contained 3,500 missing age values.
+- Five conflicting signup dates were treated as missing.
+- Five negative monthly charges and 38 charges above 200 were flagged for investigation.
+- Age-based analysis excludes customers whose ages are missing.
+- The findings are descriptive and do not establish causation.
+- Usage metrics and complaint counts showed relatively small differences between churned and retained customers.
+- The analysis depends on the quality and representativeness of the supplied datasets.
 
-```
+## How to Reproduce
+
+### Prerequisites
+
+- Python 3
+- Jupyter Notebook
+- Pandas and the other libraries imported by the notebook
+- MySQL Server and MySQL Workbench
+- Power BI Desktop
+
+### Steps
+
+1. Place the source CSV files in `Data/raw/`.
+2. Install the Python dependencies documented in `requirements.txt`.
+3. Open and run `churn_analysis.ipynb` to perform the documented cleaning and analysis.
+4. Run `SQL/01_create_tables.sql` to create the database tables.
+5. Import the corresponding cleaned CSV files into MySQL.
+6. Run `SQL/02_data_analysis.sql` to execute the SQL analysis.
+7. Open `churn_analysis_dashboard.pbix` in Power BI Desktop. Update data-source paths if the project is opened from a different location.
+
+MySQL import settings and local file paths may need to be adjusted for your environment.
+
+## Skills Demonstrated
+
+- Data cleaning and quality validation
+- Exploratory data analysis (EDA)
+- Python and Pandas data manipulation
+- SQL joins, aggregations, grouping, and segmentation
+- Cross-checking key results between Python and SQL
+- KPI design and Power BI dashboard development
+- Business interpretation and communicating analytical limitations
+
+## Project Structure
+
+```text
 Customer_Churn_Analysis/
 ├── Data/
 │   ├── raw/
-│   │   ├── customer_info.csv
-│   │   ├── usage_data.csv
-│   │   └── churn_labels.csv
 │   └── cleaned/
-│       ├── customers_clean.csv
-│       ├── customer_analysis.csv
-│       ├── churn_labels.csv
-│       └── usage.csv
 ├── SQL/
 │   ├── 01_create_tables.sql
 │   └── 02_data_analysis.sql
@@ -219,58 +205,15 @@ Customer_Churn_Analysis/
 ├── churn_analysis.ipynb
 ├── churn_analysis_dashboard.pbix
 ├── requirements.txt
-└── README.md
+├── README.md
+└── .gitignore
 ```
-
-This is the intended public-facing structure. Include `requirements.txt`
-after creating it from the notebook's actual imports. The temporary
-`customers_mysql_import.csv` file is omitted from the proposed final
-structure because it is specific to the import workflow; keep it locally
-until you confirm it is no longer needed.
-
-## How to Reproduce
-
-### Prerequisites
-
--   Python 3
--   Jupyter Notebook
--   Pandas and the other libraries imported by the notebook
--   MySQL Server and MySQL Workbench
--   Power BI Desktop
-
-### Steps
-
-1.  Place the source CSV files in `Data/raw/` (only redistribute them if
-    their license permits it).
-2.  Install the Python dependencies documented in `requirements.txt`.
-3.  Open and run `churn_analysis.ipynb` to perform the documented
-    cleaning and analysis.
-4.  Run `SQL/01_create_tables.sql` to create the database tables.
-5.  Import the corresponding cleaned CSV files into MySQL.
-6.  Run `SQL/02_data_analysis.sql` to execute the SQL analysis.
-7.  Open `churn_analysis_dashboard.pbix` in Power BI Desktop. Update
-    data-source paths if the project is opened from a different
-    location.
-
-MySQL import settings and local file paths may need to be adjusted for
-your environment.
-
-## Skills Demonstrated
-
--   Data cleaning and quality validation
--   Exploratory data analysis (EDA)
--   Python and Pandas data manipulation
--   SQL joins, aggregations, grouping, and segmentation
--   Cross-checking key results between Python and SQL
--   KPI design and Power BI dashboard development
--   Business interpretation and communicating analytical limitations
 
 ## Contact
 
-**\[Aryan Yadav\]** --- Aspiring Data Analyst
+**Aryan Yadav** — Aspiring Data Analyst
 
--   **LinkedIn:** \[(https://www.linkedin.com/in/aryan-yadav-234762292)\]
--   **Email:** \[aryannyadavv5555@gmail.com\]
+- **LinkedIn:** [Aryan Yadav](https://www.linkedin.com/in/aryan-yadav-234762292)
+- **Email:** [aryannyadavv5555@gmail.com](mailto:aryannyadavv5555@gmail.com)
 
-Open to Data Analyst internships and entry-level opportunities involving
-SQL, Python, Power BI, and business analytics.
+Open to Data Analyst internships and entry-level opportunities involving SQL, Python, Power BI, and business analytics.
